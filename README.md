@@ -14,16 +14,14 @@
 
 ### For Chrome:
 
-1. Download this repo.
-2. Unzip the downloaded file to a desired location on your computer.
-3. Open the file, delete the manifest_firefox.json file, and rename manifest_chrome.json to manfiest.json.
-4. Open Chrome and go to `chrome://extensions/`.
-5. Enable Developer Mode and click 'Load unpacked' and select the directory where you unzipped the extension files.
+1. Download the repository and unzip the downloaded file.
+2. Open the file, delete the manifest_firefox.json file, and rename manifest_chrome.json to manfiest.json.
+3. Open Chrome andgo to `chrome://extensions/`.
+4. Enable Developer Mode and click 'Load unpacked' and select the directory where you unzipped the extension files.
 
 ### Firefox:
 
-1. Download this repo.
-2. Unzip the downloaded file to a desired location on your computer.
-3. Open the file, delete the manifest_chrome.json file, and rename manifest_firefox.json to manfiest.json.
-4. Go to `about:debugging#/runtime/this-firefox`
-5. Click **Load Temporary Add-on** and select the `manifest.json` within the directory where you unzipped the extension files. *(Note: this temporary install is only active until Firefox is closed.)*
+1. Download the repository and unzip the downloaded file.
+2. Open the file, delete the manifest_chrome.json file, and rename manifest_firefox.json to manfiest.json.
+3. Go to `about:debugging#/runtime/this-firefox`
+5. Click **Load Temporary Add-on** and select the `manifest.json`. *(Note: this temporary install is only active until Firefox is closed.)*
