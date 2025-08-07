@@ -4,7 +4,7 @@
   <img src="icons/icon128.png" width="64" height="64">
 </a>
 
-**Swap the default cursor in Google Docs™ with a sleek, animated caret! Great for students, writers, and anyone who wants a better editing experience.**
+**Swap the default cursor in Google Docs with a sleek, animated caret! Great for students, writers, and anyone who wants a better editing experience.**
 
 <kbd>
 <div style="border: 1 solid black; padding: 10;">
