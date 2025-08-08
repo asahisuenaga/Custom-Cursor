@@ -1,0 +1,111 @@
+{
+  "extension_name": {
+    "message": "Benutzerdefinierter Cursor in Google Docs"
+  },
+  "extension_description": {
+    "message": "Ersetze den Standard-Cursor durch einen eleganten und animierten Cursor!"
+  },
+  "title": {
+    "message": "Benutzerdefinierter Cursor in Google Docs"
+  },
+  "ThicknessLabel": {
+    "message": "Dicke"
+  },
+  "BlinkLabel": {
+    "message": "Blink-Animation"
+  },
+  "SmoothAnimationLabel": {
+    "message": "Flüssige Animation"
+  },
+  "trueOption": {
+    "message": "An"
+  },
+  "falseOption": {
+    "message": "Aus"
+  },
+  "gradientLabel": {
+    "message": "Verlauf"
+  },
+  "livePreviewLabel": {
+    "message": "Live-Vorschau"
+  },
+  "infoMessage": {
+    "message": "Wenn es nicht funktioniert, lade Google Docs neu."
+  },
+  "openDocsButton": {
+    "message": "Google Docs öffnen"
+  },
+  "saveButton": {
+    "message": "Speichern & Beenden"
+  },
+  "maker": {
+    "message": "Erweiterung unterstützen"
+  },
+  "gradientDynamic": {
+    "message": "Dynamisch"
+  },
+  "gradientRainbow": {
+    "message": "Regenbogen"
+  },
+  "gradientRed": {
+    "message": "Rot"
+  },
+  "gradientSnow": {
+    "message": "Schnee"
+  },
+  "gradientOcean": {
+    "message": "Ozean"
+  },
+  "gradientForest": {
+    "message": "Wald"
+  },
+  "gradientFire": {
+    "message": "Feuer"
+  },
+  "gradientIce": {
+    "message": "Eis"
+  },
+  "gradientNeon": {
+    "message": "Neon"
+  },
+  "gradientGold": {
+    "message": "Gold"
+  },
+  "gradientSilver": {
+    "message": "Silber"
+  },
+  "gradientTwilight": {
+    "message": "Dämmerung"
+  },
+  "gradientVintage": {
+    "message": "Vintage"
+  },
+  "gradientTropical": {
+    "message": "Tropisch"
+  },
+  "gradientFloral": {
+    "message": "Blumig"
+  },
+  "gradientCandy": {
+    "message": "Süßigkeiten"
+  },
+  "notInDocsMessage": {
+    "message": "Du bist nicht in Google Docs."
+  },
+  "thankYouTitle": {
+    "message": "Vielen Dank für den Download. Lesen Sie die Versionshinweise auf&nbsp;$githubLink$.",
+    "placeholders": {
+      "githubLink": {
+        "content": "<a href='https://github.com/asahisuenaga/ccgd' target='_blank'>Github</a>"
+      }
+    }
+  },
+  "ratingTitle": {
+    "message": "Gefällt Ihnen die Erweiterung? Bewerten Sie die Erweiterung im&nbsp;$chromeWebStoreLink$!",
+    "placeholders": {
+      "chromeWebStoreLink": {
+        "content": "<a href='https://chromewebstore.google.com/detail/custom-cursor-in-google-d/nnmghknojpihdnofejbocdcnmhibkfdc/' target='_blank'>Chrome Web Store</a>"
+      }
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "extension_name": {
+    "message": "Vlastní kurzor v Google Docs"
+  },
+  "extension_description": {
+    "message": "Vyměňte výchozí kurzor za elegantní a animovanou závorku!"
+  },
+  "title": {
+    "message": "Vlastní kurzor v Google Docs"
+  },
+  "caretWidthLabel": {
+    "message": "Tloušťka"
+  },
+  "BlinkLabel": {
+    "message": "Blikání animace"
+  },
+  "SmoothAnimationLabel": {
+    "message": "Hladká animace"
+  },
+  "trueOption": {
+    "message": "Zapnuto"
+  },
+  "falseOption": {
+    "message": "Vypnuto"
+  },
+  "gradientLabel": {
+    "message": "Přechod"
+  },
+  "livePreviewLabel": {
+    "message": "Živý náhled"
+  },
+  "infoMessage": {
+    "message": "Pokud to nefunguje, znovu načtěte Google Docs."
+  },
+  "openDocsButton": {
+    "message": "Otevřít Google Docs"
+  },
+  "saveButton": {
+    "message": "Uložit a ukončit"
+  },
+  "maker": {
+    "message": "Podpořit rozšíření"
+  },
+  "gradientDynamic": {
+    "message": "Dynamický"
+  },
+  "gradientRainbow": {
+    "message": "Duhový"
+  },
+  "gradientRed": {
+    "message": "Červený"
+  },
+  "gradientSnow": {
+    "message": "Sníh"
+  },
+  "gradientOcean": {
+    "message": "Oceán"
+  },
+  "gradientForest": {
+    "message": "Les"
+  },
+  "gradientFire": {
+    "message": "Oheň"
+  },
+  "gradientIce": {
+    "message": "Led"
+  },
+  "gradientNeon": {
+    "message": "Neon"
+  },
+  "gradientGold": {
+    "message": "Zlato"
+  },
+  "gradientSilver": {
+    "message": "Stříbro"
+  },
+  "gradientTwilight": {
+    "message": "Soumrak"
+  },
+  "gradientVintage": {
+    "message": "Vintage"
+  },
+  "gradientTropical": {
+    "message": "Tropický"
+  },
+  "gradientFloral": {
+    "message": "Květinový"
+  },
+  "gradientCandy": {
+    "message": "Cukrový"
+  },
+  "notInDocsMessage": {
+    "message": "Nejste v Google Docs."
+  },
+  "thankYouTitle": {
+    "message": "Děkujeme za stažení. Přečtěte si poznámky k vydání na&nbsp;$githubLink$.",
+    "placeholders": {
+      "githubLink": {
+        "content": "<a href='https://github.com/asahisuenaga/ccgd' target='_blank'>Github</a>"
+      }
+    }
+  },
+  "ratingTitle": {
+    "message": "Líbí se vám toto rozšíření? Ohodnoťte ho v&nbsp;$chromeWebStoreLink$!",
+    "placeholders": {
+      "chromeWebStoreLink": {
+        "content": "<a href='https://chromewebstore.google.com/detail/custom-cursor-in-google-d/nnmghknojpihdnofejbocdcnmhibkfdc/' target='_blank'>Chrome Web Store</a>"
+      }
+    }
+  }
+}

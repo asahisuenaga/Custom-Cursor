@@ -1,0 +1,111 @@
+{
+  "extension_name": {
+    "message": "Kursor tersuai dalam Google Docs"
+  },
+  "extension_description": {
+    "message": "Gantikan kursor lalai dengan kursor yang bergaya dan animasi!"
+  },
+  "title": {
+    "message": "Kursor tersuai dalam Google Docs"
+  },
+  "caretWidthLabel": {
+    "message": "Ketebalan"
+  },
+  "BlinkLabel": {
+    "message": "Kedip animasi"
+  },
+  "SmoothAnimationLabel": {
+    "message": "Animasi halus"
+  },
+  "trueOption": {
+    "message": "Hidup"
+  },
+  "falseOption": {
+    "message": "Mati"
+  },
+  "gradientLabel": {
+    "message": "Gradasi"
+  },
+  "livePreviewLabel": {
+    "message": "Pratinjau Langsung"
+  },
+  "infoMessage": {
+    "message": "Jika tidak berfungsi, muat semula Google Docs."
+  },
+  "openDocsButton": {
+    "message": "Buka Google Docs"
+  },
+  "saveButton": {
+    "message": "Simpan & Keluar"
+  },
+  "maker": {
+    "message": "Sokong sambungan ini"
+  },
+  "gradientDynamic": {
+    "message": "Dinamik"
+  },
+  "gradientRainbow": {
+    "message": "Pelangi"
+  },
+  "gradientRed": {
+    "message": "Merah"
+  },
+  "gradientSnow": {
+    "message": "Salji"
+  },
+  "gradientOcean": {
+    "message": "Lautan"
+  },
+  "gradientForest": {
+    "message": "Hutan"
+  },
+  "gradientFire": {
+    "message": "Api"
+  },
+  "gradientIce": {
+    "message": "Ais"
+  },
+  "gradientNeon": {
+    "message": "Neon"
+  },
+  "gradientGold": {
+    "message": "Emas"
+  },
+  "gradientSilver": {
+    "message": "Perak"
+  },
+  "gradientTwilight": {
+    "message": "Senja"
+  },
+  "gradientVintage": {
+    "message": "Vintage"
+  },
+  "gradientTropical": {
+    "message": "Tropika"
+  },
+  "gradientFloral": {
+    "message": "Bunga"
+  },
+  "gradientCandy": {
+    "message": "Gula-gula"
+  },
+  "notInDocsMessage": {
+    "message": "Anda tidak berada dalam Google Docs."
+  },
+  "thankYouTitle": {
+    "message": "Terima kasih kerana memuat turun. Baca nota pelepasan di&nbsp;$githubLink$.",
+    "placeholders": {
+      "githubLink": {
+        "content": "<a href='https://github.com/asahisuenaga/ccgd' target='_blank'>Github</a>"
+      }
+    }
+  },
+  "ratingTitle": {
+    "message": "Seronok menggunakan sambungan? Nilai sambungan di&nbsp;$chromeWebStoreLink$!",
+    "placeholders": {
+      "chromeWebStoreLink": {
+        "content": "<a href='https://chromewebstore.google.com/detail/custom-cursor-in-google-d/nnmghknojpihdnofejbocdcnmhibkfdc/' target='_blank'>Chrome Web Store</a>"
+      }
+    }
+  }
+}
