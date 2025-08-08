@@ -84,6 +84,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('BlinkLabel')) {
     document.getElementById('BlinkLabel').innerText = chrome.i18n.getMessage("BlinkLabel");
   }
+  if (document.getElementById('SmoothAnimationLabel')) {
+    document.getElementById('SmoothAnimationLabel').innerText = chrome.i18n.getMessage("SmoothAnimationLabel");
+  }
   if (document.getElementById('gradientLabel')) {
     document.getElementById('gradientLabel').innerText = chrome.i18n.getMessage("gradientLabel");
   }
@@ -99,15 +102,16 @@ document.addEventListener('DOMContentLoaded', () => {
   if (maker) {
     maker.innerText = chrome.i18n.getMessage("maker");
   }
-  const trueOption = document.querySelector('#BlinkSelect option[value="true"]');
-  const falseOption = document.querySelector('#BlinkSelect option[value="false"]');
+  // Remove outdated BlinkSelect references since dropdown is created dynamically
+  // const trueOption = document.querySelector('#BlinkSelect option[value="true"]');
+  // const falseOption = document.querySelector('#BlinkSelect option[value="false"]');
 
-  if (trueOption) {
-    trueOption.innerText = chrome.i18n.getMessage("falseOption");
-  }
-  if (falseOption) {
-    falseOption.innerText = chrome.i18n.getMessage("trueOption");
-  }
+  // if (trueOption) {
+  //   trueOption.innerText = chrome.i18n.getMessage("falseOption");
+  // }
+  // if (falseOption) {
+  //   falseOption.innerText = chrome.i18n.getMessage("trueOption");
+  // }
 
   // Load saved settings
   chrome.storage.sync.get(['Thickness', 'Blink', 'gradientStyle'], (result) => {
@@ -204,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!isGoogleDocs) return;
     const thicknessObj = thicknessOptions.find(o => o.value === currentThickness) || thicknessOptions[0];
     const blinkObj = blinkOptions.find(o => o.value === currentBlink) || blinkOptions[0];
+    const smoothAnimationObj = smoothAnimationOptions.find(o => o.value === currentSmoothAnimation) || smoothAnimationOptions[0];
     const gradientColors = getGradientColors(currentGradient);
     const gradientCSS = `linear-gradient(-45deg, ${gradientColors.join(', ')})`;
     const previewBox = document.getElementById('settingsLivePreview');
@@ -216,8 +221,25 @@ document.addEventListener('DOMContentLoaded', () => {
       typingState = { text: helloText, phase: 'typing', charIndex: 0 };
     }
     let displayText = helloText.slice(0, typingState.charIndex);
-    let caretClass = `live-gradient-bar live-gradient-animated${blinkObj.blink ? ' live-caret-blink' : ''}`;
-    let caretStyle = `display:inline-block;vertical-align:bottom;width:${thicknessObj.width}px;height:20px;margin-left:8px;border-radius:3px;background:${gradientCSS};`;
+    
+    // Calculate animation duration based on blink speed
+    let animationStyle = '';
+    let backgroundStyle = gradientCSS;
+    if (blinkObj.blink) {
+      const duration = blinkObj.speed === 0.5 ? '1.4s' : '0.7s';
+      animationStyle = `animation: caret-blink ${duration} steps(1) infinite;`;
+      // Use a solid color for blink animation to make it more visible
+      backgroundStyle = '#111';
+    }
+    
+    // Add smooth transition if enabled
+    let smoothTransition = '';
+    if (smoothAnimationObj.smooth) {
+      smoothTransition = 'transition: all 80ms ease;';
+    }
+    
+    let caretClass = `live-gradient-bar live-gradient-animated`;
+    let caretStyle = `display:inline-block;vertical-align:bottom;width:${thicknessObj.width}px;height:20px;margin-left:8px;border-radius:3px;background:${backgroundStyle};${animationStyle}${smoothTransition}`;
 
     previewBox.innerHTML = `
       <div class='cursor-dropdown-selected' style='overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 0;'>
@@ -336,8 +358,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Custom Dropdown for Blink ---
   const blinkOptions = [
-    { value: 'false', label: chrome.i18n.getMessage("trueOption") || 'Yes', blink: true },
-    { value: 'true', label: chrome.i18n.getMessage("falseOption") || 'No', blink: false }
+    { value: 'false', label: chrome.i18n.getMessage("trueOption") || 'Yes', blink: true, speed: 1.0 },
+    { value: 'half', label: '0.5x', blink: true, speed: 0.5 },
+    { value: 'true', label: chrome.i18n.getMessage("falseOption") || 'No', blink: false, speed: 0 }
   ];
   const blinkDropdownContainer = document.getElementById('blinkDropdownContainer');
   // Track current selected values for live preview
@@ -348,7 +371,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const selected = blinkOptions.find(o => o.value === selectedValue) || blinkOptions[0];
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const thickness = 4; // fixed thickness for blink preview
-    const blinkBar = `<span class="${isDark ? 'dark-preview-bar' : ''}" style="display:inline-block;vertical-align:middle;margin-right:8px;width:${thickness}px;height:20px;border-radius:3px;background:#111;${selected.blink ? 'animation:caret-blink 0.7s steps(1) infinite;' : ''}"></span>`;
+    
+    // Calculate animation duration based on speed
+    const animationDuration = selected.speed === 0 ? '0s' : selected.speed === 0.5 ? '1.4s' : '0.7s';
+    const blinkBar = `<span class="${isDark ? 'dark-preview-bar' : ''}" style="display:inline-block;vertical-align:middle;margin-right:8px;width:${thickness}px;height:20px;border-radius:3px;background:#111;${selected.blink ? `animation:caret-blink ${animationDuration} steps(1) infinite;` : ''}"></span>`;
+    
     blinkDropdownContainer.innerHTML = `
       <div class="cursor-dropdown-selected" id="blinkDropdownSelected">
         ${blinkBar}
@@ -356,12 +383,15 @@ document.addEventListener('DOMContentLoaded', () => {
         <span class="cursor-dropdown-arrow">▼</span>
       </div>
       <div class="cursor-dropdown-list" id="blinkDropdownList">
-        ${blinkOptions.map(o => `
-          <div class="cursor-dropdown-option${o.value === selectedValue ? ' selected' : ''}" data-value="${o.value}">
-            <span class="${isDark ? 'dark-preview-bar' : ''}" style="display:inline-block;vertical-align:middle;margin-right:8px;width:${thickness}px;height:20px;border-radius:3px;background:#111;${o.blink ? 'animation:caret-blink 0.7s steps(1) infinite;' : ''}"></span>
-            <span class="cursor-label">${o.label}</span>
-          </div>
-        `).join('')}
+        ${blinkOptions.map(o => {
+          const optionDuration = o.speed === 0 ? '0s' : o.speed === 0.5 ? '1.4s' : '0.7s';
+          return `
+            <div class="cursor-dropdown-option${o.value === selectedValue ? ' selected' : ''}" data-value="${o.value}">
+              <span class="${isDark ? 'dark-preview-bar' : ''}" style="display:inline-block;vertical-align:middle;margin-right:8px;width:${thickness}px;height:20px;border-radius:3px;background:#111;${o.blink ? `animation:caret-blink ${optionDuration} steps(1) infinite;` : ''}"></span>
+              <span class="cursor-label">${o.label}</span>
+            </div>
+          `;
+        }).join('')}
       </div>
     `;
     updateSettingsLivePreview(true);
@@ -390,13 +420,81 @@ document.addEventListener('DOMContentLoaded', () => {
       option.onclick = (e) => {
         e.stopPropagation();
         const value = option.getAttribute('data-value');
-        chrome.storage.sync.set({ Blink: value === 'true' });
+        chrome.storage.sync.set({ Blink: value });
         renderBlinkDropdown(value);
       };
     });
   }
   chrome.storage.sync.get(['Blink'], (result) => {
     renderBlinkDropdown(result.Blink !== undefined ? String(result.Blink) : 'false');
+  });
+
+  // --- Custom Dropdown for Smooth Animation ---
+  const smoothAnimationOptions = [
+    { value: 'true', label: chrome.i18n.getMessage("trueOption") || 'Yes', smooth: true },
+    { value: 'false', label: chrome.i18n.getMessage("falseOption") || 'No', smooth: false }
+  ];
+  const smoothAnimationDropdownContainer = document.getElementById('smoothAnimationDropdownContainer');
+  // Track current selected values for live preview
+  let currentSmoothAnimation = 'false';
+
+  function renderSmoothAnimationDropdown(selectedValue) {
+    currentSmoothAnimation = selectedValue;
+    const selected = smoothAnimationOptions.find(o => o.value === selectedValue) || smoothAnimationOptions[0];
+    const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const thickness = 4; // fixed thickness for smooth animation preview
+    
+    // Create preview with smooth transition effect
+    const smoothBar = `<span class="${isDark ? 'dark-preview-bar' : ''}" style="display:inline-block;vertical-align:middle;margin-right:8px;width:${thickness}px;height:20px;border-radius:3px;background:#111;${selected.smooth ? 'transition: all 80ms ease;' : ''}"></span>`;
+    
+    smoothAnimationDropdownContainer.innerHTML = `
+      <div class="cursor-dropdown-selected" id="smoothAnimationDropdownSelected">
+        ${smoothBar}
+        <span class="cursor-label">${selected.label}</span>
+        <span class="cursor-dropdown-arrow">▼</span>
+      </div>
+      <div class="cursor-dropdown-list" id="smoothAnimationDropdownList">
+        ${smoothAnimationOptions.map(o => `
+          <div class="cursor-dropdown-option${o.value === selectedValue ? ' selected' : ''}" data-value="${o.value}">
+            <span class="${isDark ? 'dark-preview-bar' : ''}" style="display:inline-block;vertical-align:middle;margin-right:8px;width:${thickness}px;height:20px;border-radius:3px;background:#111;${o.smooth ? 'transition: all 80ms ease;' : ''}"></span>
+            <span class="cursor-label">${o.label}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    updateSettingsLivePreview(true);
+    const selectedDiv = document.getElementById('smoothAnimationDropdownSelected');
+    const listDiv = document.getElementById('smoothAnimationDropdownList');
+    let docClickHandler;
+    selectedDiv.onclick = (e) => {
+      e.stopPropagation();
+      closeAllDropdowns('smoothAnimationDropdownList');
+      listDiv.classList.toggle('open');
+      selectedDiv.classList.toggle('open');
+      if (listDiv.classList.contains('open')) {
+        docClickHandler = function handler(ev) {
+          if (!smoothAnimationDropdownContainer.contains(ev.target)) {
+            listDiv.classList.remove('open');
+            selectedDiv.classList.remove('open');
+            document.removeEventListener('click', docClickHandler);
+          }
+        };
+        setTimeout(() => document.addEventListener('click', docClickHandler), 0);
+      } else if (docClickHandler) {
+        document.removeEventListener('click', docClickHandler);
+      }
+    };
+    Array.from(listDiv.getElementsByClassName('cursor-dropdown-option')).forEach(option => {
+      option.onclick = (e) => {
+        e.stopPropagation();
+        const value = option.getAttribute('data-value');
+        chrome.storage.sync.set({ SmoothAnimation: value === 'true' });
+        renderSmoothAnimationDropdown(value);
+      };
+    });
+  }
+  chrome.storage.sync.get(['SmoothAnimation'], (result) => {
+    renderSmoothAnimationDropdown(result.SmoothAnimation !== undefined ? String(result.SmoothAnimation) : 'false');
   });
 
   // --- Custom Dropdown for Gradient ---
