@@ -117,34 +117,71 @@ function monitorColorChange(cursor) {
     observer.observe(cursor, { attributes: true, attributeFilter: ['style'] });
 }
 
-// Function to apply blink removal from storage
-function applyBlinkRemoval() {
-    debouncedStorageGet(['Blink'], (result) => {
-        const Blink = result.Blink || false;
+// Function to apply smooth animation from storage
+function applySmoothAnimation() {
+    debouncedStorageGet(['SmoothAnimation'], (result) => {
+        const SmoothAnimation = result.SmoothAnimation || false;
         const cursorElements = document.querySelectorAll('.docs-text-ui-cursor-blink, .kix-cursor, .CodeMirror-cursor, .monaco-editor .cursors-layer .cursor');
 
-        if (Blink) {
+        if (SmoothAnimation) {
             cursorElements.forEach(cursor => {
-                cursor.style.setProperty('-webkit-animation-iteration-count', '0', 'important');
-                cursor.style.setProperty('animation-iteration-count', '0', 'important');
-                cursor.style.setProperty('visibility', 'visible', 'important');
+                cursor.style.setProperty('transition', 'all 80ms ease', 'important');
             });
         } else {
             cursorElements.forEach(cursor => {
-                cursor.style.removeProperty('-webkit-animation-iteration-count');
-                cursor.style.removeProperty('animation-iteration-count');
-                cursor.style.removeProperty('visibility');
+                cursor.style.removeProperty('transition');
             });
         }
     });
 }
 
-// Listen for storage changes and apply new blink removal live
+// Function to apply blink removal from storage
+function applyBlinkRemoval() {
+    debouncedStorageGet(['Blink'], (result) => {
+        const Blink = result.Blink || 'false';
+        const cursorElements = document.querySelectorAll('.docs-text-ui-cursor-blink, .kix-cursor, .CodeMirror-cursor, .monaco-editor .cursors-layer .cursor');
+
+        if (Blink === 'true') {
+            // Blink disabled - cursor stays visible
+            cursorElements.forEach(cursor => {
+                cursor.style.setProperty('-webkit-animation-iteration-count', '0', 'important');
+                cursor.style.setProperty('animation-iteration-count', '0', 'important');
+                cursor.style.setProperty('visibility', 'visible', 'important');
+            });
+        } else if (Blink === 'half') {
+            // 0.5x blink speed - slower blinking
+            cursorElements.forEach(cursor => {
+                cursor.style.removeProperty('-webkit-animation-iteration-count');
+                cursor.style.removeProperty('animation-iteration-count');
+                cursor.style.removeProperty('visibility');
+                cursor.style.setProperty('-webkit-animation-duration', '1.4s', 'important');
+                cursor.style.setProperty('animation-duration', '1.4s', 'important');
+            });
+        } else {
+            // Normal blink speed (default)
+            cursorElements.forEach(cursor => {
+                cursor.style.removeProperty('-webkit-animation-iteration-count');
+                cursor.style.removeProperty('animation-iteration-count');
+                cursor.style.removeProperty('visibility');
+                cursor.style.removeProperty('-webkit-animation-duration');
+                cursor.style.removeProperty('animation-duration');
+            });
+        }
+    });
+}
+
+// Listen for storage changes and apply new settings live
 chrome.storage.onChanged.addListener((changes, area) => {
-    if (area === 'sync' && changes.Blink) {
+    if (area === 'sync') {
         // Clear cache when storage changes
         cache.storageCache = {};
-        applyBlinkRemoval();
+        
+        if (changes.Blink) {
+            applyBlinkRemoval();
+        }
+        if (changes.SmoothAnimation) {
+            applySmoothAnimation();
+        }
     }
 });
 
@@ -180,6 +217,9 @@ function initialize() {
         // Apply blink removal if needed
         applyBlinkRemoval();
 
+        // Apply smooth animation if needed
+        applySmoothAnimation();
+
         // Listen for storage changes and apply new settings live
         chrome.storage.onChanged.addListener((changes, area) => {
             if (area === 'sync') {
@@ -194,6 +234,9 @@ function initialize() {
                 }
                 if (changes.Blink) {
                     applyBlinkRemoval();
+                }
+                if (changes.SmoothAnimation) {
+                    applySmoothAnimation();
                 }
                 if (changes.gradientStyle) {
                     const gradientStyle = changes.gradientStyle.newValue || 'dynamic';
@@ -246,19 +289,33 @@ const urlObserver = new MutationObserver(() => {
 urlObserver.observe(document, { subtree: true, childList: true });
 
 function applyCaretStyling() {
-  debouncedStorageGet(['Thickness', 'Blink', 'gradientStyle'], (result) => {
+  debouncedStorageGet(['Thickness', 'Blink', 'SmoothAnimation', 'gradientStyle'], (result) => {
 
     const Thickness = result.Thickness || '2';
-    const Blink = result.Blink !== undefined ? result.Blink : false;
+    const Blink = result.Blink !== undefined ? result.Blink : 'false';
+    const SmoothAnimation = result.SmoothAnimation !== undefined ? result.SmoothAnimation : false;
     const gradientStyle = result.gradientStyle || 'rainbow';
 
     // Apply caret width
     document.documentElement.style.setProperty('--caret-width', `${Thickness}px`);
 
-    // Apply remove blink setting
-    const caretBlinkStyle = Blink ? 'blink-off-class' : 'blink-on-class';
-    document.documentElement.classList.remove('blink-off-class', 'blink-on-class');
+    // Apply blink setting
+    let caretBlinkStyle;
+    if (Blink === 'true') {
+      caretBlinkStyle = 'blink-off-class'; // Blink disabled
+    } else if (Blink === 'half') {
+      caretBlinkStyle = 'blink-half-class'; // 0.5x blink speed
+    } else {
+      caretBlinkStyle = 'blink-on-class'; // Normal blink speed
+    }
+    
+    document.documentElement.classList.remove('blink-off-class', 'blink-on-class', 'blink-half-class');
     document.documentElement.classList.add(caretBlinkStyle);
+
+    // Apply smooth animation styling
+    const smoothAnimationClass = SmoothAnimation ? 'smooth-animation-on' : 'smooth-animation-off';
+    document.documentElement.classList.remove('smooth-animation-on', 'smooth-animation-off');
+    document.documentElement.classList.add(smoothAnimationClass);
 
     // Apply gradient styling
     const gradientClass = `gradient-${gradientStyle}`;
