@@ -352,9 +352,22 @@ button:hover {
 .caret-blink {
   animation: caret-blink 1s steps(1) infinite;
 }
+.caret-blink-half {
+  animation: caret-blink 1.4s steps(1) infinite;
+}
+.smooth-animation-on {
+  transition: all 80ms ease;
+}
+.smooth-animation-off {
+  transition: none;
+}
 @keyframes caret-blink {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
+}
+/* Ensure caret-blink animation works in live preview */
+.live-gradient-bar[style*="animation: caret-blink"] {
+  animation: inherit !important;
 }
 .gradient-bar {
   display: inline-block;
@@ -397,6 +410,10 @@ button:hover {
   border-radius: 3px;
   width: 8px;
 }
+/* Ensure caret-blink animation works in live preview */
+.live-gradient-bar[style*="animation: caret-blink"] {
+  animation: caret-blink 0.7s steps(1) infinite !important;
+}
 @media (prefers-color-scheme: dark) {
   #settingsLivePreviewLabel {
     color: #f5f5f5 !important;
@@ -429,6 +446,7 @@ button:hover {
 
 #thicknessDropdownContainer,
 #blinkDropdownContainer,
+#smoothAnimationDropdownContainer,
 #gradientDropdownContainer {
   position: relative;
   width: 200px;
@@ -450,7 +468,7 @@ button:hover {
 <body>
   <!-- Header with icon and title -->
   <div class="header">
-    <img src="icon128.png" alt="Icon">
+    <img src="icons/icon128.png" alt="Icon">
     <h1 id="title"></h1>
   </div>
 
@@ -462,9 +480,14 @@ button:hover {
         <div id="gradientDropdownContainer"></div>
       </label>
 
-    <label for="BlinkSelect">
+    <label>
       <span id="BlinkLabel"></span>
       <div id="blinkDropdownContainer"></div>
+    </label>
+
+    <label>
+      <span id="SmoothAnimationLabel"></span>
+      <div id="smoothAnimationDropdownContainer"></div>
     </label>
 
     <label for="Thickness">
