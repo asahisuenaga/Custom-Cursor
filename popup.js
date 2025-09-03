@@ -225,11 +225,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // Calculate animation duration based on blink speed
     let animationStyle = '';
     let backgroundStyle = gradientCSS;
+    let backgroundSize = 'background-size: 400% 400%;';
+    
     if (blinkObj.blink) {
       const duration = blinkObj.speed === 0.5 ? '1.4s' : '0.7s';
-      animationStyle = `animation: caret-blink ${duration} steps(1) infinite;`;
-      // Use a solid color for blink animation to make it more visible
-      backgroundStyle = '#111';
+      animationStyle = `animation: caret-blink ${duration} steps(1) infinite, gradientAnimation 10s ease infinite;`;
+    } else {
+      animationStyle = `animation: gradientAnimation 10s ease infinite;`;
     }
     
     // Add smooth transition if enabled
