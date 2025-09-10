@@ -525,27 +525,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderGradientDropdown(selectedValue) {
     currentGradient = selectedValue;
     const selected = gradientOptions.find(o => o.value === selectedValue) || gradientOptions[0];
-    const getGradientColors = (gradientValue) => {
-      const gradientStyles = {
-        rainbow: ['#FFB6C1', '#FF69B4', '#DA70D6', '#9370DB', '#48C9B0', '#F0E68C', '#FFD700'],
-        red: ['#FF0000', '#B22222', '#8B0000', '#DC143C', '#FF6347'],
-        dynamic: ['#e6e6e6', '#333333'],
-        snow: ['#00BFFF', '#1E90FF', '#4682B4', '#ADD8E6', '#F0F8FF'],
-        ocean: ['#2193B0', '#6DD5ED', '#B2FEFA', '#2F80ED', '#56CCF2'],
-        forest: ['#005C1E', '#228B22', '#8FBC8F', '#2E8B57', '#006400'],
-        fire: ['#FF4500', '#FF8C00', '#FFD700', '#FFA500', '#FF6347'],
-        ice: ['#00FFFF', '#E0FFFF', '#AFEEEE', '#7FFFD4', '#40E0D0'],
-        neon: ['#39FF14', '#FF073A', '#FFD700', '#DA22FF', '#7FFF00'],
-        gold: ['#FFD700', '#FFB84D', '#FFA500', '#FF8C00', '#DAA520'],
-        silver: ['#C0C0C0', '#D3D3D3', '#A9A9A9', '#808080', '#B0C4DE'],
-        vintage: ['#eacda3', '#d6ae7b'],
-        twilight: ['#FFA07A', '#FA8072', '#E9967A', '#8B4513', '#2E2E2E'],
-        tropical: ['#FFD700', '#FF4500', '#FF8C00', '#00FA9A', '#20B2AA'],
-        floral: ['#FF69B4', '#FFB6C1', '#FFC0CB', '#FFDAB9', '#FFE4E1'],
-        candy: ['#FFC3A0', '#FF85A1', '#FF6D6A', '#FFC1CC', '#FF99A8']
-      };
-      return gradientStyles[gradientValue] || gradientStyles.rainbow;
-    };
     const selectedGradColors = getGradientColors(selected.value);
     const selectedGradCSS = `linear-gradient(-45deg, ${selectedGradColors.join(', ')})`;
     gradientDropdownContainer.innerHTML = `
