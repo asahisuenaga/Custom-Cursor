@@ -228,10 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let backgroundSize = 'background-size: 400% 400%;';
     
     if (blinkObj.blink) {
-      const duration = blinkObj.speed === 0.5 ? '1.4s' : '0.7s';
-      animationStyle = `animation: caret-blink ${duration} steps(1) infinite, gradientAnimation 10s ease infinite;`;
+      const duration = blinkObj.speed === 0.5 ? '2.8s' : '1.4s';  // Doubled the durations
+      animationStyle = `animation: caret-blink ${duration} steps(1) infinite, gradientAnimation 15s ease infinite;`;  // Increased from 10s to 15s
     } else {
-      animationStyle = `animation: gradientAnimation 10s ease infinite;`;
+      animationStyle = `animation: gradientAnimation 15s ease infinite;`;  // Increased from 10s to 15s
     }
     
     // Add smooth transition if enabled
@@ -264,27 +264,27 @@ document.addEventListener('DOMContentLoaded', () => {
         typingTimeout = setTimeout(() => {
           typingState.charIndex++;
           updateSettingsLivePreview();
-        }, 120);
+        }, 180);  // Increased from 120 to 180
       } else {
         typingState.phase = 'pause';
         typingTimeout = setTimeout(() => {
           typingState.phase = 'erasing';
           updateSettingsLivePreview();
-        }, 1200);
+        }, 1800);  // Increased from 1200 to 1800
       }
     } else if (typingState.phase === 'erasing') {
       if (typingState.charIndex > 0) {
         typingTimeout = setTimeout(() => {
           typingState.charIndex--;
           updateSettingsLivePreview();
-        }, 60);
+        }, 90);  // Increased from 60 to 90
       } else {
         typingState.phase = 'typing';
         helloIndex = (helloIndex + 1) % helloTranslations.length;
         typingState.text = helloTranslations[helloIndex % helloTranslations.length];
         typingTimeout = setTimeout(() => {
           updateSettingsLivePreview();
-        }, 400);
+        }, 600);  // Increased from 400 to 600
       }
     }
   }
@@ -348,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function createBlinkPreviewBar(option, thickness = 4) {
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const animationDuration = option.speed === 0 ? '0s' : option.speed === 0.5 ? '1.4s' : '0.7s';
+    const animationDuration = option.speed === 0 ? '0s' : option.speed === 0.5 ? '2.8s' : '1.4s';  // Doubled the durations
     return `<span class="${isDark ? 'dark-preview-bar' : ''}" style="display:inline-block;vertical-align:middle;margin-right:8px;width:${thickness}px;height:20px;border-radius:3px;background:#111;${option.blink ? `animation:caret-blink ${animationDuration} steps(1) infinite;` : ''}"></span>`;
   }
 
