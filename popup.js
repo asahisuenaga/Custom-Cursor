@@ -1,6 +1,6 @@
 // Define helloTranslations at the very top so it's available everywhere
 const helloTranslations = [
-  'hello', // en
+  'Hello', // en
   'ሰላም', // am
   'مرحبا', // ar
   'Здравей', // bg
@@ -244,6 +244,13 @@ document.addEventListener('DOMContentLoaded', () => {
     let caretStyle = `display:inline-block;vertical-align:bottom;width:${thicknessObj.width}px;height:20px;margin-left:8px;border-radius:3px;background:${backgroundStyle};${animationStyle}${smoothTransition}`;
 
     previewBox.innerHTML = `
+      <style>
+        @keyframes gradientAnimation { 
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+      </style>
       <div class='cursor-dropdown-selected' style='overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 0;'>
         <span style='font-size: 14px; font-family: inherit; color: inherit; user-select: none;'>${displayText}</span>
         <span class='${caretClass}' style='${caretStyle}'></span>
