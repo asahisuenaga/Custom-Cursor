@@ -228,10 +228,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let backgroundSize = 'background-size: 400% 400%;';
     
     if (blinkObj.blink) {
-      const duration = blinkObj.speed === 0.5 ? '2.8s' : '1.4s';  // Doubled the durations
-      animationStyle = `animation: caret-blink ${duration} steps(1) infinite, gradientAnimation 15s ease infinite;`;  // Increased from 10s to 15s
+      const duration = blinkObj.speed === 0.5 ? '2.8s' : '1.4s';
+      animationStyle = `animation: caret-blink ${duration} linear infinite, gradientAnimation 20s linear infinite;`;
     } else {
-      animationStyle = `animation: gradientAnimation 15s ease infinite;`;  // Increased from 10s to 15s
+      animationStyle = `animation: gradientAnimation 20s linear infinite;`;
     }
     
     // Add smooth transition if enabled
@@ -241,14 +241,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     let caretClass = `live-gradient-bar live-gradient-animated`;
-    let caretStyle = `display:inline-block;vertical-align:bottom;width:${thicknessObj.width}px;height:20px;margin-left:8px;border-radius:3px;background:${backgroundStyle};${animationStyle}${smoothTransition}`;
+    let caretStyle = `display:inline-block;vertical-align:bottom;width:${thicknessObj.width}px;height:20px;margin-left:8px;border-radius:3px;background:${backgroundStyle};background-size:400% 400%;${animationStyle}${smoothTransition}`;
 
     previewBox.innerHTML = `
       <style>
         @keyframes gradientAnimation { 
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+          0% { background-position: 0% 0%; }
+          50% { background-position: 100% 100%; }
+          100% { background-position: 0% 0%; }
+        }
+        @keyframes caret-blink {
+          0%, 49% { opacity: 1; }
+          50%, 100% { opacity: 0; }
         }
       </style>
       <div class='cursor-dropdown-selected' style='overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 0;'>
@@ -264,20 +268,20 @@ document.addEventListener('DOMContentLoaded', () => {
         typingTimeout = setTimeout(() => {
           typingState.charIndex++;
           updateSettingsLivePreview();
-        }, 180);  // Increased from 120 to 180
+        }, 180);
       } else {
         typingState.phase = 'pause';
         typingTimeout = setTimeout(() => {
           typingState.phase = 'erasing';
           updateSettingsLivePreview();
-        }, 1800);  // Increased from 1200 to 1800
+        }, 1800);
       }
     } else if (typingState.phase === 'erasing') {
       if (typingState.charIndex > 0) {
         typingTimeout = setTimeout(() => {
           typingState.charIndex--;
           updateSettingsLivePreview();
-        }, 90);  // Increased from 60 to 90
+        }, 90);
       } else {
         typingState.phase = 'typing';
         helloIndex = (helloIndex + 1) % helloTranslations.length;
@@ -446,7 +450,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedGradCSS = `linear-gradient(-45deg, ${selectedGradColors.join(', ')})`;
     gradientDropdownContainer.innerHTML = `
       <div class="cursor-dropdown-selected" id="gradientDropdownSelected">
-        <span style="display:inline-block;vertical-align:middle;margin-right:8px;width:6px;height:20px;border-radius:3px;background:${selectedGradCSS};background-size:400% 400%;animation:gradientAnimation 10s ease infinite;"></span>
+        <span style="display:inline-block;vertical-align:middle;margin-right:8px;width:6px;height:20px;border-radius:3px;background:${selectedGradCSS};background-size:400% 400%;animation:gradientAnimation 20s linear infinite;"></span>
         <span class="cursor-label">${selected.label}</span>
         <span class="cursor-dropdown-arrow">▼</span>
       </div>
@@ -456,7 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const gradCSS = `linear-gradient(-45deg, ${gradColors.join(', ')})`;
           return `
             <div class="cursor-dropdown-option${o.value === selectedValue ? ' selected' : ''}" data-value="${o.value}">
-              <span style="display:inline-block;vertical-align:middle;margin-right:8px;width:6px;height:20px;border-radius:3px;background:${gradCSS};background-size:400% 400%;animation:gradientAnimation 10s ease infinite;"></span>
+              <span style="display:inline-block;vertical-align:middle;margin-right:8px;width:6px;height:20px;border-radius:3px;background:${gradCSS};background-size:400% 400%;animation:gradientAnimation 20s linear infinite;"></span>
               <span class="cursor-label">${o.label}</span>
             </div>
           `;
