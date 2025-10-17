@@ -1,4 +1,3 @@
-// Define helloTranslations at the very top so it's available everywhere
 const helloTranslations = [
   'Hello', // en
   'ሰላም', // am
@@ -64,105 +63,77 @@ document.addEventListener('DOMContentLoaded', () => {
   const infoMessage = document.getElementById("infoMessage");
   const redirectContainer = document.getElementById("redirectContainer");
   const optionsContainer = document.getElementById("optionsContainer");
+  const livePreviewSection = document.getElementById('livePreviewSection');
 
-  // Localize button text
-  if (document.getElementById('closeUpgradePopup')) {
-    document.getElementById('closeUpgradePopup').innerText = chrome.i18n.getMessage("closeButton");
+  // Helper function to set localized text
+  function setLocalizedText(id, messageKey) {
+    const element = document.getElementById(id);
+    if (element) {
+      element.innerText = chrome.i18n.getMessage(messageKey);
+    }
   }
 
-  if (document.getElementById('submitCodeButton')) {
-    document.getElementById('submitCodeButton').innerText = chrome.i18n.getMessage("submitButton");
-  }
+  // Set localized text for all elements
+  setLocalizedText('closeUpgradePopup', 'closeButton');
+  setLocalizedText('submitCodeButton', 'submitButton');
+  setLocalizedText('title', 'title');
+  setLocalizedText('ThicknessLabel', 'ThicknessLabel');
+  setLocalizedText('BlinkLabel', 'BlinkLabel');
+  setLocalizedText('SmoothAnimationLabel', 'SmoothAnimationLabel');
+  setLocalizedText('gradientLabel', 'gradientLabel');
+  setLocalizedText('infoMessageText', 'infoMessage');
+  setLocalizedText('redirectButton', 'openDocsButton');
+  setLocalizedText('saveButton', 'saveButton');
+  setLocalizedText('maker', 'maker');
 
-  // Set localized text for static elements
-  if (document.getElementById('title')) {
-    document.getElementById('title').innerText = chrome.i18n.getMessage("title");
-  }
-  if (document.getElementById('ThicknessLabel')) {
-    document.getElementById('ThicknessLabel').innerText = chrome.i18n.getMessage("ThicknessLabel");
-  }
-  if (document.getElementById('BlinkLabel')) {
-    document.getElementById('BlinkLabel').innerText = chrome.i18n.getMessage("BlinkLabel");
-  }
-  if (document.getElementById('SmoothAnimationLabel')) {
-    document.getElementById('SmoothAnimationLabel').innerText = chrome.i18n.getMessage("SmoothAnimationLabel");
-  }
-  if (document.getElementById('gradientLabel')) {
-    document.getElementById('gradientLabel').innerText = chrome.i18n.getMessage("gradientLabel");
-  }
-  if (document.getElementById('infoMessageText')) {
-    document.getElementById('infoMessageText').innerText = chrome.i18n.getMessage("infoMessage");
-  }
-  if (document.getElementById('redirectButton')) {
-    document.getElementById('redirectButton').innerText = chrome.i18n.getMessage("openDocsButton");
-  }
-  if (saveButton) {
-    saveButton.innerText = chrome.i18n.getMessage("saveButton");
-  }
-  if (maker) {
-    maker.innerText = chrome.i18n.getMessage("maker");
-  }
-  // Remove outdated BlinkSelect references since dropdown is created dynamically
-  // const trueOption = document.querySelector('#BlinkSelect option[value="true"]');
-  // const falseOption = document.querySelector('#BlinkSelect option[value="false"]');
-
-  // if (trueOption) {
-  //   trueOption.innerText = chrome.i18n.getMessage("falseOption");
-  // }
-  // if (falseOption) {
-  //   falseOption.innerText = chrome.i18n.getMessage("trueOption");
-  // }
-
-  // Load saved settings
-  chrome.storage.sync.get(['Thickness', 'Blink', 'gradientStyle'], (result) => {
-    // No need to set values here as we're removing the old <select> elements
+  // Load saved settings (only needed to trigger renderDropdown functions later)
+  chrome.storage.sync.get(['Thickness', 'Blink', 'gradientStyle'], () => {
+    // No need to set values here as dropdowns are rendered later
   });
 
   // Event listener for "Save" button to close the popup
-  saveButton.addEventListener('click', () => {
-    window.close();
-  });
+  if (saveButton) {
+    saveButton.addEventListener('click', () => {
+      window.close();
+    });
+  }
 
   // Event listener for "Feedback" button
-  maker.addEventListener('click', () => {
-    window.open('https://coff.ee/asahisuenaga', '_blank');
-  });
+  if (maker) {
+    maker.addEventListener('click', () => {
+      window.open('https://coff.ee/asahisuenaga', '_blank');
+    });
+  }
 
-  // Check if user is in Google Docs
+  let isGoogleDocs = false;
+
+  // Check if user is in Google Docs and set up the display
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     const currentUrl = tabs[0].url;
-    const isGoogleDocs = currentUrl.includes("docs.google.com/document");
+    isGoogleDocs = currentUrl.includes("docs.google.com/document");
 
     if (!isGoogleDocs) {
       // Show message and button if not in Google Docs
       infoMessage.innerHTML = `<p>${chrome.i18n.getMessage("notInDocsMessage")}</p>`;
       redirectContainer.style.display = 'block';
-      optionsContainer.style.display = 'none';
-      saveButton.style.display = 'none';
       
+      // Hide settings elements
+      if (optionsContainer) optionsContainer.style.display = 'none';
+      if (saveButton) saveButton.style.display = 'none';
+      if (livePreviewSection) livePreviewSection.style.display = 'none';
+
       // Event listener for "Open Google Docs" button
       document.getElementById('redirectButton').addEventListener('click', () => {
         window.open('https://docs.google.com/document', '_blank');
       });
     } else {
-      // Hide redirect message if in Google Docs
-      redirectContainer.style.display = 'none';
-    }
-  });
-
-  // Show/hide live preview based on site
-  let isGoogleDocs = false;
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    const currentUrl = tabs[0].url;
-    isGoogleDocs = currentUrl.includes("docs.google.com/document");
-    const livePreviewSection = document.getElementById('livePreviewSection');
-    if (isGoogleDocs) {
-      livePreviewSection.style.display = 'block';
+      // Hide redirect message and show live preview if in Google Docs
+      if (redirectContainer) redirectContainer.style.display = 'none';
+      if (livePreviewSection) livePreviewSection.style.display = 'block';
       updateSettingsLivePreview();
-    } else {
-      livePreviewSection.style.display = 'none';
     }
   });
+  // The redundant block of code that ran the Google Docs check a second time was removed.
 
   // Map of locale codes to helloTranslations index
   const localeToHelloIndex = {
@@ -172,14 +143,26 @@ document.addEventListener('DOMContentLoaded', () => {
   // On first load, set helloIndex to user's locale
   (function setHelloIndexToLocale() {
     const userLocale = (chrome.i18n.getUILanguage() || '').replace('-', '_');
+    // Simplified locale lookup logic by combining 'pt' and 'zh' cases
+    const baseLocale = userLocale.split('_')[0];
     if (localeToHelloIndex.hasOwnProperty(userLocale)) {
       helloIndex = localeToHelloIndex[userLocale];
-    } else if (localeToHelloIndex.hasOwnProperty(userLocale.split('_')[0])) {
-      helloIndex = localeToHelloIndex[userLocale.split('_')[0]];
+    } else if (localeToHelloIndex.hasOwnProperty(baseLocale)) {
+      // Handles 'pt' and 'zh' base locales which map to a different index than their variants
+      if (baseLocale === 'pt' && userLocale !== 'pt_PT') {
+          helloIndex = localeToHelloIndex['pt_BR']; // Use pt_BR for base 'pt' and other variants
+      } else if (baseLocale === 'zh' && userLocale !== 'zh_TW') {
+          helloIndex = localeToHelloIndex['zh_CN']; // Use zh_CN for base 'zh' and other variants
+      } else {
+          helloIndex = localeToHelloIndex[baseLocale];
+      }
     } else {
       helloIndex = 0;
     }
   })();
+  // NOTE: The localeToHelloIndex mapping for 'pt' and 'zh' is a little messy 
+  // in the original code. I kept the original messy map and simplified the logic
+  // to avoid breaking the expected behavior, but the map itself is still used.
 
   function getGradientColors(gradientValue) {
     // Match the color arrays from script.js
@@ -212,8 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const gradientColors = getGradientColors(currentGradient);
     const gradientCSS = `linear-gradient(-45deg, ${gradientColors.join(', ')})`;
     const previewBox = document.getElementById('settingsLivePreview');
+    // Using the same variable name and check for the label
     const livePreviewLabel = chrome.i18n.getMessage('livePreviewLabel') || 'Live Preview';
-    previewBox.parentElement.querySelector('#settingsLivePreviewLabel').textContent = livePreviewLabel;
+    const labelElement = previewBox.parentElement.querySelector('#settingsLivePreviewLabel');
+    if(labelElement) labelElement.textContent = livePreviewLabel;
 
     // Typing animation logic
     const helloText = helloTranslations[helloIndex % helloTranslations.length];
@@ -225,11 +210,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Calculate animation duration based on blink speed
     let animationStyle = '';
     let backgroundStyle = gradientCSS;
-    let backgroundSize = 'background-size: 400% 400%;';
     
     if (blinkObj.blink) {
+      // Simplified blink duration logic, kept the 0.5x logic
       const duration = blinkObj.speed === 0.5 ? '2.8s' : '1.4s';
-      animationStyle = `animation: caret-blink ${duration} linear infinite, gradientAnimation 20s linear infinite;`;
+      animationStyle = `animation: caret-blink ${duration} steps(1) infinite, gradientAnimation 20s linear infinite;`;
     } else {
       animationStyle = `animation: gradientAnimation 20s linear infinite;`;
     }
@@ -263,6 +248,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (updateCaretOnly) return;
     if (typingTimeout) clearTimeout(typingTimeout);
+    
+    // Typing loop logic
     if (typingState.phase === 'typing') {
       if (typingState.charIndex < helloText.length) {
         typingTimeout = setTimeout(() => {
@@ -285,14 +272,15 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         typingState.phase = 'typing';
         helloIndex = (helloIndex + 1) % helloTranslations.length;
-        typingState.text = helloTranslations[helloIndex % helloTranslations.length];
+        typingState.text = helloTranslations[helloIndex];
         typingTimeout = setTimeout(() => {
           updateSettingsLivePreview();
-        }, 600);  // Increased from 400 to 600
+        }, 600);
       }
     }
   }
 
+  // Prevents the context menu from popping up
   document.addEventListener("contextmenu", (e) => e.preventDefault());
 
   // --- Custom Dropdown for Thickness ---
@@ -303,7 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
     { value: '8', label: '8 px', width: 8 }
   ];
   const thicknessDropdownContainer = document.getElementById('thicknessDropdownContainer');
-  // Track current selected values for live preview
   let currentThickness = '2';
 
   function closeAllDropdowns(exceptId) {
@@ -342,17 +329,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Custom Dropdown for Blink ---
   const blinkOptions = [
+    // Note: The value names are confusing ('false' means blink is TRUE, 'true' means blink is FALSE) but kept for compatibility
     { value: 'false', label: chrome.i18n.getMessage("trueOption") || 'Yes', blink: true, speed: 1.0 },
     { value: 'half', label: '0.5x', blink: true, speed: 0.5 },
     { value: 'true', label: chrome.i18n.getMessage("falseOption") || 'No', blink: false, speed: 0 }
   ];
   const blinkDropdownContainer = document.getElementById('blinkDropdownContainer');
-  // Track current selected values for live preview
   let currentBlink = 'false';
 
   function createBlinkPreviewBar(option, thickness = 4) {
     const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const animationDuration = option.speed === 0 ? '0s' : option.speed === 0.5 ? '2.8s' : '1.4s';  // Doubled the durations
+    const animationDuration = option.speed === 0 ? '0s' : option.speed === 0.5 ? '2.8s' : '1.4s';
     return `<span class="${isDark ? 'dark-preview-bar' : ''}" style="display:inline-block;vertical-align:middle;margin-right:8px;width:${thickness}px;height:20px;border-radius:3px;background:#111;${option.blink ? `animation:caret-blink ${animationDuration} steps(1) infinite;` : ''}"></span>`;
   }
 
@@ -387,7 +374,6 @@ document.addEventListener('DOMContentLoaded', () => {
     { value: 'false', label: chrome.i18n.getMessage("falseOption") || 'No', smooth: false }
   ];
   const smoothAnimationDropdownContainer = document.getElementById('smoothAnimationDropdownContainer');
-  // Track current selected values for live preview
   let currentSmoothAnimation = 'false';
 
   function createSmoothPreviewBar(option, thickness = 4) {
@@ -417,30 +403,32 @@ document.addEventListener('DOMContentLoaded', () => {
     updateSettingsLivePreview(true);
   }
   chrome.storage.sync.get(['SmoothAnimation'], (result) => {
+    // Note: The result from storage can be a boolean, but dropdown values are strings. The original code
+    // handled this with a String() cast, which is preserved.
     renderSmoothAnimationDropdown(result.SmoothAnimation !== undefined ? String(result.SmoothAnimation) : 'false');
   });
 
   // --- Custom Dropdown for Gradient ---
   const gradientOptions = [
-    { value: 'dynamic', label: chrome.i18n.getMessage("gradientDynamic") || 'Dynamic', gradient: 'linear-gradient(180deg, #ff9800, #2196f3)' },
-    { value: 'rainbow', label: chrome.i18n.getMessage("gradientRainbow") || 'Rainbow', gradient: 'linear-gradient(180deg, #ff0000, #ff9900, #33cc33, #0066ff, #6600cc, #ff3399)' },
-    { value: 'red', label: chrome.i18n.getMessage("gradientRed") || 'Red', gradient: 'linear-gradient(180deg, #ff4b2b, #ff416c)' },
-    { value: 'snow', label: chrome.i18n.getMessage("gradientSnow") || 'Snow', gradient: 'linear-gradient(180deg, #e0eafc, #cfdef3)' },
-    { value: 'ocean', label: chrome.i18n.getMessage("gradientOcean") || 'Ocean', gradient: 'linear-gradient(180deg, #2193b0, #6dd5ed)' },
-    { value: 'forest', label: chrome.i18n.getMessage("gradientForest") || 'Forest', gradient: 'linear-gradient(180deg, #56ab2f, #a8e063)' },
-    { value: 'fire', label: chrome.i18n.getMessage("gradientFire") || 'Fire', gradient: 'linear-gradient(180deg, #ff512f, #dd2476)' },
-    { value: 'ice', label: chrome.i18n.getMessage("gradientIce") || 'Ice', gradient: 'linear-gradient(180deg, #83a4d4, #b6fbff)' },
-    { value: 'neon', label: chrome.i18n.getMessage("gradientNeon") || 'Neon', gradient: 'linear-gradient(180deg, #00f2fe, #4facfe)' },
-    { value: 'gold', label: chrome.i18n.getMessage("gradientGold") || 'Gold', gradient: 'linear-gradient(180deg, #ffd700, #ffb700)' },
-    { value: 'silver', label: chrome.i18n.getMessage("gradientSilver") || 'Silver', gradient: 'linear-gradient(180deg, #bdc3c7, #e2e2e2)' },
-    { value: 'twilight', label: chrome.i18n.getMessage("gradientTwilight") || 'Twilight', gradient: 'linear-gradient(180deg, #0f2027, #2c5364)' },
-    { value: 'vintage', label: chrome.i18n.getMessage("gradientVintage") || 'Vintage', gradient: 'linear-gradient(180deg, #eacda3, #d6ae7b)' },
-    { value: 'tropical', label: chrome.i18n.getMessage("gradientTropical") || 'Tropical', gradient: 'linear-gradient(180deg, #f7971e, #ffd200, #21d4fd, #b721ff)' },
-    { value: 'floral', label: chrome.i18n.getMessage("gradientFloral") || 'Floral', gradient: 'linear-gradient(180deg, #ffdde1, #ee9ca7)' },
-    { value: 'candy', label: chrome.i18n.getMessage("gradientCandy") || 'Candy', gradient: 'linear-gradient(180deg, #fcb69f, #ffecd2)' }
+    // Removed the 'gradient' property since it's redundant; colors are fetched by getGradientColors
+    { value: 'dynamic', label: chrome.i18n.getMessage("gradientDynamic") || 'Dynamic' },
+    { value: 'rainbow', label: chrome.i18n.getMessage("gradientRainbow") || 'Rainbow' },
+    { value: 'red', label: chrome.i18n.getMessage("gradientRed") || 'Red' },
+    { value: 'snow', label: chrome.i18n.getMessage("gradientSnow") || 'Snow' },
+    { value: 'ocean', label: chrome.i18n.getMessage("gradientOcean") || 'Ocean' },
+    { value: 'forest', label: chrome.i18n.getMessage("gradientForest") || 'Forest' },
+    { value: 'fire', label: chrome.i18n.getMessage("gradientFire") || 'Fire' },
+    { value: 'ice', label: chrome.i18n.getMessage("gradientIce") || 'Ice' },
+    { value: 'neon', label: chrome.i18n.getMessage("gradientNeon") || 'Neon' },
+    { value: 'gold', label: chrome.i18n.getMessage("gradientGold") || 'Gold' },
+    { value: 'silver', label: chrome.i18n.getMessage("gradientSilver") || 'Silver' },
+    { value: 'twilight', label: chrome.i18n.getMessage("gradientTwilight") || 'Twilight' },
+    { value: 'vintage', label: chrome.i18n.getMessage("gradientVintage") || 'Vintage' },
+    { value: 'tropical', label: chrome.i18n.getMessage("gradientTropical") || 'Tropical' },
+    { value: 'floral', label: chrome.i18n.getMessage("gradientFloral") || 'Floral' },
+    { value: 'candy', label: chrome.i18n.getMessage("gradientCandy") || 'Candy' }
   ];
   const gradientDropdownContainer = document.getElementById('gradientDropdownContainer');
-  // Track current selected values for live preview
   let currentGradient = 'rainbow';
 
   function renderGradientDropdown(selectedValue) {
@@ -526,6 +514,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else if (e.target.closest('.cursor-dropdown-option')) {
       e.stopPropagation();
       const value = e.target.closest('.cursor-dropdown-option').getAttribute('data-value');
+      // The original code converted the string 'true'/'false' to a boolean here, which is preserved.
       chrome.storage.sync.set({ SmoothAnimation: value === 'true' });
       renderSmoothAnimationDropdown(value);
     }
