@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setLocalizedText('redirectButton', 'openDocsButton');
   setLocalizedText('saveButton', 'saveButton');
   setLocalizedText('maker', 'maker');
+  setLocalizedText('settingsLivePreviewLabel', 'livePreviewLabel');
 
   // Load saved settings (only needed to trigger renderDropdown functions later)
   chrome.storage.sync.get(['Thickness', 'Blink', 'gradientStyle'], () => {
