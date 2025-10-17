@@ -3,7 +3,7 @@
 // Prevent duplicate script injection
 if (window.stylishCursorLoaded) {
     // Script already loaded, exit early
-        return;
+    return;
 }
 window.stylishCursorLoaded = true;
 
@@ -69,8 +69,8 @@ function applyGradientAnimation(cursor, colorScheme = 'dynamic') {
         twilight: ['#FFA07A', '#FA8072', '#E9967A', '#8B4513', '#2E2E2E'],
         vintage: ['#eacda3', '#d6ae7b'],
         tropical: ['#FFD700', '#FF4500', '#FF8C00', '#00FA9A', '#20B2AA'],
-       floral: ['#FF69B4', '#FFB6C1', '#FFC0CB', '#FFDAB9', '#FFE4E1'],
-       candy: ['#FFC3A0', '#FF85A1', '#FF6D6A', '#FFC1CC', '#FF99A8']
+        floral: ['#FF69B4', '#FFB6C1', '#FFC0CB', '#FFDAB9', '#FFE4E1'],
+        candy: ['#FFC3A0', '#FF85A1', '#FF6D6A', '#FFC1CC', '#FF99A8']
     };
 
     // Select the gradient based on the color scheme
@@ -170,21 +170,6 @@ function applyBlinkRemoval() {
     });
 }
 
-// Listen for storage changes and apply new settings live
-chrome.storage.onChanged.addListener((changes, area) => {
-    if (area === 'sync') {
-        // Clear cache when storage changes
-        cache.storageCache = {};
-        
-        if (changes.Blink) {
-            applyBlinkRemoval();
-        }
-        if (changes.SmoothAnimation) {
-            applySmoothAnimation();
-        }
-    }
-});
-
 // Function to apply caret width from storage
 function applyCaretWidth(cursor) {
     debouncedStorageGet(['Thickness'], (result) => {
@@ -193,101 +178,9 @@ function applyCaretWidth(cursor) {
     });
 }
 
-// Updated initialize function to retrieve and apply gradient style on load
-function initialize() {
-    // Only get the current user's caret by id
-    const currentUserCaret = document.getElementById('kix-current-user-cursor-caret');
-    cache.cursorElements = currentUserCaret ? [currentUserCaret] : [];
+// *** REDUNDANT BLOCK REMOVED ***
 
-    if (cache.cursorElements.length > 0) {
-        // Retrieve the stored gradient style and apply it to all cursor elements
-        debouncedStorageGet(['gradientStyle'], (result) => {
-            const gradientStyle = result.gradientStyle || 'rainbow';
-            Array.from(cache.cursorElements).forEach(cursor => {
-                applyGradientAnimation(cursor, gradientStyle);
-            });
-        });
-
-        // Apply caret width from storage
-        applyCaretWidth(cache.cursorElements[0]);
-
-        // Monitor for any color changes or mutations in the cursor element
-        monitorColorChange(cache.cursorElements[0]);
-
-        // Apply blink removal if needed
-        applyBlinkRemoval();
-
-        // Apply smooth animation if needed
-        applySmoothAnimation();
-
-        // Listen for storage changes and apply new settings live
-        chrome.storage.onChanged.addListener((changes, area) => {
-            if (area === 'sync') {
-                // Clear cache when storage changes
-                cache.storageCache = {};
-                
-                if (changes.Thickness) {
-                    const newWidth = changes.Thickness.newValue || '2';
-                    Array.from(cache.cursorElements).forEach(cursor => {
-                        cursor.style.width = `${newWidth}px`;
-                    });
-                }
-                if (changes.Blink) {
-                    applyBlinkRemoval();
-                }
-                if (changes.SmoothAnimation) {
-                    applySmoothAnimation();
-                }
-                if (changes.gradientStyle) {
-                    const gradientStyle = changes.gradientStyle.newValue || 'dynamic';
-                    Array.from(cache.cursorElements).forEach(cursor => {
-                        applyGradientAnimation(cursor, gradientStyle);
-                    });
-                }
-            }
-        });
-
-        // Show thank you overlay (only once)
-        showThankYouOverlay();
-
-        // Schedule rating overlay (only once, after delay)
-        scheduleRatingOverlay();
-    } else {
-        setTimeout(initialize, 500);     // Retry if cursor element is not found
-    }
-}
-
-// Start the initialization process
-initialize();
-
-// Listen for Google Docs tab switches
-window.addEventListener('googleDocsTabSwitch', (event) => {
-    // Clear cache and reinitialize after a short delay to allow DOM to update
-    cache.cursorElements = null;
-    cache.storageCache = {};
-    setTimeout(() => {
-        initialize();
-    }, 100);
-});
-
-// Also listen for URL changes within the same page (for tab switches)
-let lastUrl = window.location.href;
-const urlObserver = new MutationObserver(() => {
-    const currentUrl = window.location.href;
-    if (currentUrl !== lastUrl && currentUrl.includes('docs.google.com/document')) {
-        lastUrl = currentUrl;
-        // Clear cache and reinitialize after a short delay
-        cache.cursorElements = null;
-        cache.storageCache = {};
-        setTimeout(() => {
-            initialize();
-        }, 100);
-    }
-});
-
-// Start observing URL changes
-urlObserver.observe(document, { subtree: true, childList: true });
-
+// Apply caret styling using CSS classes (better practice than inline styles)
 function applyCaretStyling() {
   debouncedStorageGet(['Thickness', 'Blink', 'SmoothAnimation', 'gradientStyle'], (result) => {
 
@@ -324,8 +217,94 @@ function applyCaretStyling() {
   });
 }
 
-// Apply caret styling when the script runs
+// Updated initialize function
+function initialize() {
+    // Only get the current user's caret by id
+    const currentUserCaret = document.getElementById('kix-current-user-cursor-caret');
+    cache.cursorElements = currentUserCaret ? [currentUserCaret] : [];
+
+    if (cache.cursorElements.length > 0) {
+        const cursor = cache.cursorElements[0];
+
+        // Apply all styles right away using inline styles on the cursor and classes on documentElement
+        applyCaretWidth(cursor);
+        applyBlinkRemoval();
+        applySmoothAnimation();
+        applyCaretStyling();
+        
+        // Retrieve the stored gradient style and apply it to the specific cursor element
+        debouncedStorageGet(['gradientStyle'], (result) => {
+            const gradientStyle = result.gradientStyle || 'rainbow';
+            applyGradientAnimation(cursor, gradientStyle);
+        });
+
+        // Monitor for any color changes or mutations in the cursor element
+        monitorColorChange(cursor);
+        
+        // Show thank you overlay (only once)
+        showThankYouOverlay();
+
+        // Schedule rating overlay (only once, after delay)
+        scheduleRatingOverlay();
+
+    } else {
+        setTimeout(initialize, 500);      // Retry if cursor element is not found
+    }
+}
+
+// Listen for storage changes and apply new settings live
+// *** KEPT the global listener, which handles live updates ***
+chrome.storage.onChanged.addListener((changes, area) => {
+    if (area === 'sync') {
+        // Clear cache when storage changes
+        cache.storageCache = {};
+        
+        // Re-apply all styling whenever any key changes
+        applyCaretStyling();
+
+        // Specific logic for applying gradient animation to the actual cursor element
+        if (changes.gradientStyle && cache.cursorElements && cache.cursorElements.length > 0) {
+            const gradientStyle = changes.gradientStyle.newValue || 'dynamic';
+            Array.from(cache.cursorElements).forEach(cursor => {
+                applyGradientAnimation(cursor, gradientStyle);
+            });
+        }
+    }
+});
+
+// Apply caret styling when the script runs (This ensures classes are set right away)
 applyCaretStyling();
+
+// Start the initialization process
+initialize();
+
+// Listen for Google Docs tab switches
+window.addEventListener('googleDocsTabSwitch', (event) => {
+    // Clear cache and reinitialize after a short delay to allow DOM to update
+    cache.cursorElements = null;
+    cache.storageCache = {};
+    setTimeout(() => {
+        initialize();
+    }, 100);
+});
+
+// Also listen for URL changes within the same page (for tab switches)
+let lastUrl = window.location.href;
+const urlObserver = new MutationObserver(() => {
+    const currentUrl = window.location.href;
+    if (currentUrl !== lastUrl && currentUrl.includes('docs.google.com/document')) {
+        lastUrl = currentUrl;
+        // Clear cache and reinitialize after a short delay
+        cache.cursorElements = null;
+        cache.storageCache = {};
+        setTimeout(() => {
+            initialize();
+        }, 100);
+    }
+});
+
+// Start observing URL changes
+urlObserver.observe(document, { subtree: true, childList: true });
 
 // === TOAST UTILITY ===
 function showToast({ id, message, actions }) {
