@@ -319,6 +319,13 @@ button:hover {
   animation: gradientAnimation 10s ease infinite!important;
 }
 
+/* Style for the Live Preview Text, matching other labels */
+.live-preview-label {
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
 /* DARK MODE */
 @media (prefers-color-scheme: dark) {
   body {
@@ -326,14 +333,15 @@ button:hover {
     color: #f5f5f5;
   }
 
+  /* Combined all label/text color rules, including the new .live-preview-label */
   .header h1,
   .options-container label,
   label,
+  .live-preview-label,
   .cursor-dropdown-option,
   .cursor-label,
   .maker-button,
-  .info-message,
-  #settingsLivePreviewLabel {
+  .info-message {
     color: #f5f5f5 !important;
   }
 
@@ -383,14 +391,12 @@ button:hover {
   .cursor-dropdown-option:hover, .cursor-dropdown-option.selected {
     background: #2c3e50;
   }
-  .cursor-preview-box,
-  .live-caret-preview-box {
-    background: #1b1b1b;
-  }
   .cursor-preview-box {
+    background: #1b1b1b;
     border: 1px solid #444;
   }
   .live-caret-preview-box {
+    background: #1b1b1b;
     border: 1.5px solid #444;
   }
   .dark-preview-bar {
@@ -432,7 +438,9 @@ button:hover {
   <div id="livePreviewSection" style="width:100%; display:none; margin-top: 16px;">
     <hr class="live-preview-hr">
     <div id="livePreviewRow" style="display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%;">
-      <div id="settingsLivePreviewLabel">Live Preview</div>
+      
+      <div class="live-preview-label">Live Preview</div>
+      
       <div id="settingsLivePreview" style="display: flex; align-items: center;"></div>
     </div>
   </div>
