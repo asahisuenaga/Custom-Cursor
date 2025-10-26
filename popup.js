@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Event listener for "Open Google Docs" button
       document.getElementById('redirectButton').addEventListener('click', () => {
         window.open('https://docs.google.com/document', '_blank');
+        window.close();
       });
     } else {
       // Hide redirect message and show live preview if in Google Docs
