@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Benutzerdefinierter Cursor in Google Docs"
+    "message": "Regenbogen-Cursor in Google Docs"
   },
   "extension_description": {
     "message": "Ersetze den Standard-Cursor durch einen eleganten und animierten Cursor!"
   },
   "title": {
-    "message": "Benutzerdefinierter Cursor in Google Docs"
+    "message": "Regenbogen-Cursor in Google Docs"
   },
   "ThicknessLabel": {
     "message": "Dicke"

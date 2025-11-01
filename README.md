@@ -1,4 +1,4 @@
-# [Custom Cursor in Google Docs](https://asahi.framer.wiki/cursor)
+# [Rainbow Cursor in Google Docs](https://asahi.framer.wiki/cursor)
 
 <a href="https://asahi.framer.wiki/cursor">
   <img src="icons/icon128.png" width="64" height="64">

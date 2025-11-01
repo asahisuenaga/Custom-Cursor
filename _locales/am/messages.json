@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "አስተካካይ ካርሰር ለGoogle Docs"
+    "message": "የቀስተ ደመና ጠቋሚ በGoogle Docs ውስጥ"
   },
   "extension_description": {
     "message": "ተመን ካርሰርን በአስተካካይ እና እንቅስቃሴ ያለው ካርሰር ለመቀየር!"
   },
   "title": {
-    "message": "አስተካካይ ካርሰር ለGoogle Docs"
+    "message": "የቀስተ ደመና ጠቋሚ በGoogle Docs ውስጥ"
   },
   "caretWidthLabel": {
     "message": "ውፍረት"

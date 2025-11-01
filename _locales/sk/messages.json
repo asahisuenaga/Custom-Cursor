@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Vlastný kurzor v Google Docs"
+    "message": "Dúhový kurzor v Google Docs"
   },
   "extension_description": {
     "message": "Zmeňte predvolený kurzor na elegantný a animovaný kurzor!"
   },
   "title": {
-    "message": "Vlastný kurzor v Google Docs"
+    "message": "Dúhový kurzor v Google Docs"
   },
   "caretWidthLabel": {
     "message": "Šírka"

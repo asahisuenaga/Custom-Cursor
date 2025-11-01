@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Cursor personalizado no Google Docs"
+    "message": "Cursorul curcubeu în Google Docs"
   },
   "extension_description": {
     "message": "Troque o cursor padrão por um caret elegante e animado!"
   },
   "title": {
-    "message": "Cursor personalizado no Google Docs"
+    "message": "Cursorul curcubeu în Google Docs"
   },
   "caretWidthLabel": {
     "message": "Espessura"

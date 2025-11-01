@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "સ્ટાઇલિશ કર્સર - ગૂગલ ડોક્સ માટે કસ્ટમ કર્સર"
+    "message": "ગૂગલ ડૉક્સમાં રેઈન્બો કર્સર"
   },
   "extension_description": {
     "message": "ડિફોલ્ટ કર્સરને એક સ્મૂથ અને એનિમેટેડ કૅરેટથી બદલો!"
   },
   "title": {
-    "message": "સ્ટાઇલિશ કર્સર"
+    "message": "ગૂગલ ડૉક્સમાં રેઈન્બો કર્સર"
   },
   "caretWidthLabel": {
     "message": "જાડાઈ"

@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Персонализиран курсор в Google Docs"
+    "message": "Курсор тип „Дъга“ в Google Docs"
   },
   "extension_description": {
     "message": "Заменете стандартния курсор със стилен и анимиран курсор!"
   },
   "title": {
-    "message": "Персонализиран курсор в Google Docs"
+    "message": "Курсор тип „Дъга“ в Google Docs"
   },
   "caretWidthLabel": {
     "message": "дебелина"

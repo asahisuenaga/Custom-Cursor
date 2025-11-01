@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Custom Cursor in Google Docs"
+    "message": "Rainbow Cursor in Google Docs"
   },
   "extension_description": {
     "message": "Swap the default cursor with a sleek and animated caret!"
   },
   "title": {
-    "message": "Custom Cursor in Google Docs"
+    "message": "Rainbow Cursor in Google Docs"
   },
   "ThicknessLabel": {
     "message": "Thickness"

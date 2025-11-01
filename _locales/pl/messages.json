@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Niestandardowy kursor w Google Docs"
+    "message": "Kursor tęczowy w Google Docs"
   },
   "extension_description": {
     "message": "Zamień domyślny kursor na elegancki i animowany karet!"
   },
   "title": {
-    "message": "Niestandardowy kursor w Google Docs"
+    "message": "Kursor tęczowy w Google Docs"
   },
   "caretWidthLabel": {
     "message": "Grubość"

@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "סמן אופנתי - סמן מותאם אישית עבור Google Docs"
+    "message": "סמן הקשת בגוגל דוקס"
   },
   "extension_description": {
     "message": "החלף את הסמן הבסיסי בסמן חלק ואנימטיבי!"
   },
   "title": {
-    "message": "סמן אופנתי"
+    "message": "סמן הקשת בגוגל דוקס"
   },
   "caretWidthLabel": {
     "message": "עובי"

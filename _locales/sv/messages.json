@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Anpassad markör i Google Docs"
+    "message": "Regnbågsmarkör i Google Docs"
   },
   "extension_description": {
     "message": "Byt ut standardpekaren mot en snygg och animerad markör!"
   },
   "title": {
-    "message": "Anpassad markör i Google Docs"
+    "message": "Regnbågsmarkör i Google Docs"
   },
   "ThicknessLabel": {
     "message": "Tjocklek"

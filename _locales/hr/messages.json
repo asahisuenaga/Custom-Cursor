@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Prilagođeni kursor u Google Docs"
+    "message": "Kursor u duginim bojama u Google Docs"
   },
   "extension_description": {
     "message": "Zamijenite zadani kursor s elegantnim i animiranim pokazivačem!"
   },
   "title": {
-    "message": "Prilagođeni kursor u Google Docs"
+    "message": "Kursor u duginim bojama u Google Docs"
   },
   "caretWidthLabel": {
     "message": "Debljina"

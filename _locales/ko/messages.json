@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Google Docs용 커스텀 커서"
+    "message": "Google Docs의 무지개 커서"
   },
   "extension_description": {
     "message": "기본 커서를 세련되고 애니메이션된 커서로 교체하세요!"
   },
   "title": {
-    "message": "Google Docs용 커스텀 커서"
+    "message": "Google Docs의 무지개 커서"
   },
   "ThicknessLabel": {
     "message": "두께"

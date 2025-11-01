@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Користувацький курсор у Google Docs"
+    "message": "Райдужний курсор у Google Docs"
   },
   "extension_description": {
     "message": "Замість стандартного курсора використовуйте стильний та анімований!"
   },
   "title": {
-    "message": "Користувацький курсор у Google Docs"
+    "message": "Райдужний курсор у Google Docs"
   },
   "ThicknessLabel": {
     "message": "Товщина"

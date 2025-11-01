@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Tinkintas žymeklis Google Docs"
+    "message": "Vaivorykštės žymeklis Google Docs"
   },
   "extension_description": {
     "message": "Pakeiskite numatytąjį kursorių į elegantišką ir animuotą karetą!"
   },
   "title": {
-    "message": "Tinkintas žymeklis Google Docs"
+    "message": "Vaivorykštės žymeklis Google Docs"
   },
   "caretWidthLabel": {
     "message": "Storis"

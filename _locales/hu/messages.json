@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Egyedi kurzor a Google Docsban"
+    "message": "Szivárványkurzor a Google Docsban"
   },
   "extension_description": {
     "message": "Cseréld le az alapértelmezett kurzort egy elegáns és animált kurzorra!"
   },
   "title": {
-    "message": "Egyedi kurzor a Google Docsban"
+    "message": "Szivárványkurzor a Google Docsban"
   },
   "caretWidthLabel": {
     "message": "Vastagság"

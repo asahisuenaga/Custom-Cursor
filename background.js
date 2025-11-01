@@ -10,7 +10,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       chrome.scripting.executeScript({
         target: { tabId: tabId },
         func: () => {
-          window.dispatchEvent(new CustomEvent('googleDocsTabSwitch', {
+          window.dispatchEvent(new RainbowEvent('googleDocsTabSwitch', {
             detail: { url: window.location.href }
           }));
         }

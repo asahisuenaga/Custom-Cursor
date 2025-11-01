@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "کورسور شیک - کورسور سفارشی برای Google Docs"
+    "message": "مکان‌نمای رنگین‌کمانی در گوگل داکس"
   },
   "extension_description": {
     "message": "کورسور پیش‌فرض را با یک کورسور شیک و متحرک تعویض کنید!"
   },
   "title": {
-    "message": "کورسور شیک"
+    "message": "مکان‌نمای رنگین‌کمانی در گوگل داکس"
   },
   "caretWidthLabel": {
     "message": "ضخامت"

@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "స్గూగుల్ డాక్స్ కోసం కస్టమ్ కర్సర్"
+    "message": "Google Docs రెయిన్‌బో కర్సర్"
   },
   "extension_description": {
     "message": "డిఫాల్ట్ కర్సర్‌ను స్లీక్ మరియు యానిమేటెడ్ కేర్‌తో మార్చండి!"
   },
   "title": {
-    "message": "గూగుల్ డాక్స్ కోసం కస్టమ్ కర్సర్"
+    "message": "Google Docs రెయిన్‌బో కర్సర్"
   },
   "ThicknessLabel": {
     "message": "మందం"

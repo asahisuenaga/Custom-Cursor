@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Google Docs自訂游標"
+    "message": "Google Docs中的彩虹遊標"
   },
   "extension_description": {
     "message": "將預設游標替換為優雅的動畫游標！"
   },
   "title": {
-    "message": "Google Docs自訂游標"
+    "message": "Google Docs中的彩虹遊標"
   },
   "ThicknessLabel": {
     "message": "粗細"

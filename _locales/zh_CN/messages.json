@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Google Docs自定义光标"
+    "message": "Google Docs中的彩虹光标"
   },
   "extension_description": {
     "message": "将默认光标替换为优雅的动画光标！"
   },
   "title": {
-    "message": "Google Docs自定义光标"
+    "message": "Google Docs中的彩虹光标"
   },
   "ThicknessLabel": {
     "message": "粗细"

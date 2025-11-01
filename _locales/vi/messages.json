@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Con trỏ tùy chỉnh trong Google Docs"
+    "message": "Con trỏ cầu vồng trong Google Docs"
   },
   "extension_description": {
     "message": "Thay thế con trỏ mặc định bằng một con trỏ thanh thoát và hoạt hình!"
   },
   "title": {
-    "message": "Con trỏ tùy chỉnh trong Google Docs"
+    "message": "Con trỏ cầu vồng trong Google Docs"
   },
   "ThicknessLabel": {
     "message": "Độ dày"

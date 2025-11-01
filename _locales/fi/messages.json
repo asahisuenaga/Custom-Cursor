@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Mukautettu osoitin Google Docsissa"
+    "message": "Sateenkaarikursori Google Docsissa"
   },
   "extension_description": {
     "message": "Vaihda oletuskurssori tyylikkääseen ja animoituun kursoriin!"
   },
   "title": {
-    "message": "Mukautettu osoitin Google Docsissa"
+    "message": "Sateenkaarikursori Google Docsissa"
   },
   "caretWidthLabel": {
     "message": "Paksuus"

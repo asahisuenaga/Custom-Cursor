@@ -1,12 +1,12 @@
 {
   "extension_name": {
-    "message": "Egendefinert markør i Google Docs"
+    "message": "Regnbuemarkør i Google Docs"
   },
   "extension_description": {
     "message": "Bytt ut standardkursoren med en elegant og animert markør!"
   },
   "title": {
-    "message": "Egendefinert markør i Google Docs"
+    "message": "Regnbuemarkør i Google Docs"
   },
   "caretWidthLabel": {
     "message": "Dikte"

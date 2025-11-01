@@ -286,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Prevents the context menu from popping up
   document.addEventListener("contextmenu", (e) => e.preventDefault());
 
-  // --- Custom Dropdown for Thickness ---
+  // --- Rainbow Dropdown for Thickness ---
   const thicknessOptions = [
     { value: '2', label: '2 px', width: 2 },
     { value: '4', label: '4 px', width: 4 },
@@ -330,7 +330,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderThicknessDropdown(result.Thickness || '2');
   });
 
-  // --- Custom Dropdown for Blink ---
+  // --- Rainbow Dropdown for Blink ---
   const blinkOptions = [
     // Note: The value names are confusing ('false' means blink is TRUE, 'true' means blink is FALSE) but kept for compatibility
     { value: 'false', label: chrome.i18n.getMessage("trueOption") || 'Yes', blink: true, speed: 1.0 },
@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderBlinkDropdown(result.Blink !== undefined ? String(result.Blink) : 'false');
   });
 
-  // --- Custom Dropdown for Smooth Animation ---
+  // --- Rainbow Dropdown for Smooth Animation ---
   const smoothAnimationOptions = [
     { value: 'true', label: chrome.i18n.getMessage("trueOption") || 'Yes', smooth: true },
     { value: 'false', label: chrome.i18n.getMessage("falseOption") || 'No', smooth: false }
@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSmoothAnimationDropdown(result.SmoothAnimation !== undefined ? String(result.SmoothAnimation) : 'false');
   });
 
-  // --- Custom Dropdown for Gradient ---
+  // --- Rainbow Dropdown for Gradient ---
   const gradientOptions = [
     // Removed the 'gradient' property since it's redundant; colors are fetched by getGradientColors
     { value: 'dynamic', label: chrome.i18n.getMessage("gradientDynamic") || 'Dynamic' },
