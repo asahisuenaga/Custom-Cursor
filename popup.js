@@ -103,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (maker) {
     maker.addEventListener('click', () => {
       window.open('https://coff.ee/asahisuenaga', '_blank');
+      window.close();
     });
   }
 
