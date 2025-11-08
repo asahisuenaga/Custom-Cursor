@@ -1,8 +1,6 @@
-# [Rainbow Cursor in Google Docs](https://asahi.framer.wiki/cursor)
+# Rainbow Cursor in Google Docs
 
-<a href="https://asahi.framer.wiki/cursor">
-  <img src="icons/icon128.png" width="64" height="64">
-</a>
+<img src="icons/icon128.png" width="64" height="64">
 
 **Swap the default cursor in Google Docs with a sleek, animated caret! Great for students, writers, and anyone who wants a better editing experience.**
 
